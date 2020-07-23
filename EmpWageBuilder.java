@@ -1,3 +1,7 @@
+interface ComputeEmpWageInterface {
+	public void addCompanyDetails(String company, int empRatePerHr, int maxHrsPerMonth, int numWorkingDays);
+	public void computeEmpWage();
+}
 class CompanyEmployeeWage {
     public String company;
     public int empRatePerHr;
@@ -19,7 +23,7 @@ class CompanyEmployeeWage {
         return "Total Employee Wage of " + company + " is " + totalEmpWage;
     }
 }
-public class EmpWageBuilder {
+public class EmpWageBuilder implements ComputeEmpWageInterface {
     public static final int IS_PART_TIME=1;
     public static final int IS_FULL_TIME=2;
 
@@ -32,12 +36,12 @@ public class EmpWageBuilder {
         companyEmployeeWageArray = new CompanyEmployeeWage[numOfCompanies];
     }
 
-    private void addCompanyDetails(String company, int empRatePerHr, int numOfWorkingDays, int maxHrsInMonth)
+    public void addCompanyDetails(String company, int empRatePerHr, int numOfWorkingDays, int maxHrsInMonth)
     {
 	companyEmployeeWageArray[companyNo++]=new CompanyEmployeeWage(company,empRatePerHr,numOfWorkingDays,maxHrsInMonth);
     }
 
-    private void computeEmpWage() {
+    public void computeEmpWage() {
         for (int i=0; i<numOfCompanies; i++) {
 	        companyEmployeeWageArray[i].setTotalWage(computeEmpWage(companyEmployeeWageArray[i]));
 	        System.out.println(companyEmployeeWageArray[i]);
