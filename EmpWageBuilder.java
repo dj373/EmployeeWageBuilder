@@ -9,11 +9,13 @@ class CompanyEmployeeWage {
     public int numOfWorkingDays;
     public int maxHrsInMonth;
     public int totalEmpWage;
+    public ArrayList<Integer> dailyWages;
     CompanyEmployeeWage(String company, int empRatePerHr, int numOfWorkingDays, int maxHrsInMonth) {
         this.company=company;
         this.empRatePerHr=empRatePerHr;
         this.numOfWorkingDays=numOfWorkingDays;
         this.maxHrsInMonth=maxHrsInMonth;
+	this.dailyWages= new ArrayList<Integer>();
     }
     public void setTotalWage(int totalEmpWage)
     {
@@ -22,6 +24,9 @@ class CompanyEmployeeWage {
     @Override
     public String toString(){
         return "Total Employee Wage of " + company + " is " + totalEmpWage;
+    }
+    public void addDailyWage(int dailyWage) {
+    	this.dailyWages.add(dailyWage);
     }
 }
 public class EmpWageBuilder implements ComputeEmpWageInterface {
@@ -67,8 +72,10 @@ public class EmpWageBuilder implements ComputeEmpWageInterface {
                     empHrs=0;
             }
             totalEmpHrs+=empHrs;
-            System.out.println("Day " + totalWorkingDays + " Employee Hrs: " + empHrs);
-        }
+	    int dailyWage=empHrs*companyEmployeeWage.empRatePerHr;
+            System.out.println("Day " + totalWorkingDays + " Employee Hrs: " + empHrs + " Daily Wage: " + dailyWage);
+            companyEmployeeWage.addDailyWage(dailyWage);
+	}
         return totalEmpHrs * companyEmployeeWage.empRatePerHr;
     }
 
