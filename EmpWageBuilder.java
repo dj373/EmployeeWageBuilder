@@ -73,7 +73,7 @@ public class EmpWageBuilder implements ComputeEmpWageInterface {
 
     public static void main(String[] args) {
         System.out.println("Welcome to Employee Wage Computation Program");
-        EmpWageBuilder empWageObject = new EmpWageBuilder(2);
+        ComputeEmpWageInterface empWageObject = new EmpWageBuilder(2);
         empWageObject.addCompanyDetails("Airtel", 25, 20, 200);
 	empWageObject.addCompanyDetails("Jio", 20, 25, 100);
         empWageObject.computeEmpWage();
