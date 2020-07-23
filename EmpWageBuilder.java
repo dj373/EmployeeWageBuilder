@@ -1,4 +1,3 @@
-import java.util.*;
 interface ComputeEmpWageInterface {
 	public void addCompanyDetails(String company, int empRatePerHr, int maxHrsPerMonth, int numWorkingDays);
 	public void computeEmpWage();
@@ -30,22 +29,22 @@ public class EmpWageBuilder implements ComputeEmpWageInterface {
 
     private int companyNo=0;
     private int numOfCompanies;
-    private ArrayList<CompanyEmployeeWage> companyEmployeeWageList;
+    private CompanyEmployeeWage[] companyEmployeeWageArray;
 
     EmpWageBuilder (int numOfCompanies) {
     	this.numOfCompanies=numOfCompanies;
-        companyEmployeeWageList = new ArrayList<CompanyEmployeeWage>();
+        companyEmployeeWageArray = new CompanyEmployeeWage[numOfCompanies];
     }
 
     public void addCompanyDetails(String company, int empRatePerHr, int numOfWorkingDays, int maxHrsInMonth)
     {
-	companyEmployeeWageList.add(new CompanyEmployeeWage(company,empRatePerHr,numOfWorkingDays,maxHrsInMonth));
+	companyEmployeeWageArray[companyNo++]=new CompanyEmployeeWage(company,empRatePerHr,numOfWorkingDays,maxHrsInMonth);
     }
 
     public void computeEmpWage() {
-        for (int i=0; i<companyEmployeeWageList.size(); i++) {
-	        companyEmployeeWageList.get(i).setTotalWage(this.computeEmpWage(companyEmployeeWageList.get(i)));
-	        System.out.println(companyEmployeeWageList.get(i));
+        for (int i=0; i<numOfCompanies; i++) {
+	        companyEmployeeWageArray[i].setTotalWage(computeEmpWage(companyEmployeeWageArray[i]));
+	        System.out.println(companyEmployeeWageArray[i]);
         }
     }
 
