@@ -2,6 +2,7 @@ import java.util.*;
 interface ComputeEmpWageInterface {
 	public void addCompanyDetails(String company, int empRatePerHr, int maxHrsPerMonth, int numWorkingDays);
 	public void computeEmpWage();
+	public void getTotalWage(String company);
 }
 class CompanyEmployeeWage {
     public String company;
@@ -34,17 +35,18 @@ public class EmpWageBuilder implements ComputeEmpWageInterface {
     public static final int IS_FULL_TIME=2;
 
     private int companyNo=0;
-    private int numOfCompanies;
     private ArrayList<CompanyEmployeeWage> companyEmployeeWageArray;
-
-    EmpWageBuilder (int numOfCompanies) {
-    	this.numOfCompanies=numOfCompanies;
+    private HashMap<String,CompanyEmployeeWage> companyTotalWageMap;
+    EmpWageBuilder () {
         companyEmployeeWageArray = new ArrayList<CompanyEmployeeWage>();
+    	companyTotalWageMap = new HashMap<String,CompanyEmployeeWage>();
     }
 
     public void addCompanyDetails(String company, int empRatePerHr, int numOfWorkingDays, int maxHrsInMonth)
     {
-	companyEmployeeWageArray.add(new CompanyEmployeeWage(company,empRatePerHr,numOfWorkingDays,maxHrsInMonth));
+	CompanyEmployeeWage companyEmployeeWage = new CompanyEmployeeWage(company,empRatePerHr,numOfWorkingDays,maxHrsInMonth);
+	companyEmployeeWageArray.add(companyEmployeeWage);
+	companyTotalWageMap.put(company,companyEmployeeWage);
     }
 
     public void computeEmpWage() {
@@ -78,12 +80,19 @@ public class EmpWageBuilder implements ComputeEmpWageInterface {
 	}
         return totalEmpHrs * companyEmployeeWage.empRatePerHr;
     }
+    @Override
+    public void getTotalWage(String company) {
+    	System.out.println("Total Wage for "+company+" is "+companyTotalWageMap.get(company).totalEmpWage);
+    }
 
     public static void main(String[] args) {
         System.out.println("Welcome to Employee Wage Computation Program");
-        ComputeEmpWageInterface empWageObject = new EmpWageBuilder(2);
+        ComputeEmpWageInterface empWageObject = new EmpWageBuilder();
         empWageObject.addCompanyDetails("Airtel", 25, 20, 200);
 	empWageObject.addCompanyDetails("Jio", 20, 25, 100);
         empWageObject.computeEmpWage();
+	System.out.println();
+	empWageObject.getTotalWage("Airtel");
+	empWageObject.getTotalWage("Jio");
     }
 }
